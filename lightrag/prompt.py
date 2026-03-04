@@ -217,6 +217,41 @@ Description List:
 ---Output---
 """
 
+PROMPTS["summarize_entity_descriptions_with_latest"] = """---Role---
+You are a Knowledge Graph Specialist, proficient in data curation and synthesis.
+
+---Task---
+Your task is to generate a single, coherent description for a single entity by carefully comparing:
+1) the entity's existing description already stored in the knowledge graph, and
+2) the new description extracted from the current document chunk.
+
+You must integrate the information from both descriptions. When they conflict, resolve the conflict by following the rule below.
+
+---Instructions---
+1. Use ONLY the information contained in the Existing Description and the Chunk Description. Do not invent facts that are not present in these inputs.
+2. The final result MUST describe the entity in the third person, and explicitly mention the entity name at the beginning.
+3. Carefully compare the Existing Description and the Chunk Description:
+   - If there is NO conflict, merge or rewrite them into a single, clear description.
+   - If there ARE conflicts or contradictions, you MUST follow the conflict rule below.
+
+4. Conflict rule: When the Existing Description and the Chunk Description contradict each other or express conflicting views, your merged summary MUST (a) explicitly state that there is a contradiction, and (b) resolve it by treating **{latest_obj}** as the authoritative source (以 {latest_obj} 为准). Phrase the conflicting part so that the conclusion aligns with {latest_obj}, and you may briefly note that the other source differs or is superseded.
+
+5. Length: The final description must not exceed {summary_length} tokens while keeping key information.
+6. Language: The entire output must be written in {language}. Proper nouns may remain in the original language if needed.
+
+---Input---
+Entity Name: {description_name}
+
+Existing Description:
+{existing_description}
+
+Chunk Description:
+{chunk_description}
+
+---Output---
+Return only the final merged description text, in one or more paragraphs, with no extra headings or labels.
+"""
+
 PROMPTS["fail_response"] = (
     "Sorry, I'm not able to provide an answer to that question.[no-context]"
 )

@@ -1,0 +1,82 @@
+{
+  "doc-9b155c27876eb17812cb63a8ef361b5a": {
+    "relation_pairs": [
+      [
+        "办公软件",
+        "星海科技"
+      ],
+      [
+        "1990",
+        "星海科技"
+      ],
+      [
+        "Office Software",
+        "StarOcean Tech"
+      ],
+      [
+        "北京",
+        "星海科技"
+      ],
+      [
+        "中国",
+        "星海科技"
+      ],
+      [
+        "星海科技",
+        "李建国"
+      ],
+      [
+        "Li Jianguo",
+        "StarOcean Tech"
+      ],
+      [
+        "Beijing",
+        "StarOcean Tech"
+      ]
+    ],
+    "count": 8,
+    "create_time": 1772606950,
+    "update_time": 1772606950,
+    "_id": "doc-9b155c27876eb17812cb63a8ef361b5a"
+  },
+  "doc-633c54bd78902f36f87a705e0c1e6f4e": {
+    "relation_pairs": [
+      [
+        "StarOcean Tech",
+        "上海"
+      ],
+      [
+        "Cloud Computing Services",
+        "StarOcean Tech"
+      ],
+      [
+        "StarOcean Tech",
+        "李建国"
+      ],
+      [
+        "Shanghai",
+        "StarOcean Tech"
+      ],
+      [
+        "China",
+        "StarOcean Tech"
+      ],
+      [
+        "StarOcean Tech",
+        "中国"
+      ],
+      [
+        "2005",
+        "StarOcean Tech"
+      ],
+      [
+        "Li Jianguo",
+        "StarOcean Tech"
+      ]
+    ],
+    "count": 8,
+    "create_time": 1772607097,
+    "update_time": 1772607097,
+    "_id": "doc-633c54bd78902f36f87a705e0c1e6f4e"
+  }
+}

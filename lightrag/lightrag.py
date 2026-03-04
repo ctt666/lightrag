@@ -634,19 +634,19 @@ class LightRAG:
             namespace=NameSpace.VECTOR_STORE_ENTITIES,
             workspace=self.workspace,
             embedding_func=self.embedding_func,
-            meta_fields={"entity_name", "source_id", "content", "file_path"},
+            meta_fields={"entity_name", "source_id", "content", "file_path", "publish_time"},
         )
         self.relationships_vdb: BaseVectorStorage = self.vector_db_storage_cls(  # type: ignore
             namespace=NameSpace.VECTOR_STORE_RELATIONSHIPS,
             workspace=self.workspace,
             embedding_func=self.embedding_func,
-            meta_fields={"src_id", "tgt_id", "source_id", "content", "file_path"},
+            meta_fields={"src_id", "tgt_id", "source_id", "content", "file_path", "publish_time"},
         )
         self.chunks_vdb: BaseVectorStorage = self.vector_db_storage_cls(  # type: ignore
             namespace=NameSpace.VECTOR_STORE_CHUNKS,
             workspace=self.workspace,
             embedding_func=self.embedding_func,
-            meta_fields={"full_doc_id", "content", "file_path"},
+            meta_fields={"full_doc_id", "content", "file_path", "publish_time"},
         )
 
         # Initialize document status storage
@@ -1127,6 +1127,7 @@ class LightRAG:
         ids: str | list[str] | None = None,
         file_paths: str | list[str] | None = None,
         track_id: str | None = None,
+        publish_time: str | list[str] | None = None,
     ) -> str:
         """Sync Insert documents with checkpoint support
 
@@ -1139,6 +1140,7 @@ class LightRAG:
             ids: single string of the document ID or list of unique document IDs, if not provided, MD5 hash IDs will be generated
             file_paths: single string of the file path or list of file paths, used for citation
             track_id: tracking ID for monitoring processing status, if not provided, will be generated
+            publish_time: optional ISO8601 publish time (e.g. 2024-03-01T00:00:00Z); single value or list matching document count
 
         Returns:
             str: tracking ID for monitoring processing status
@@ -1152,6 +1154,7 @@ class LightRAG:
                 ids,
                 file_paths,
                 track_id,
+                publish_time,
             )
         )
 
@@ -1163,6 +1166,7 @@ class LightRAG:
         ids: str | list[str] | None = None,
         file_paths: str | list[str] | None = None,
         track_id: str | None = None,
+        publish_time: str | list[str] | None = None,
     ) -> str:
         """Async Insert documents with checkpoint support
 
@@ -1175,6 +1179,7 @@ class LightRAG:
             ids: list of unique document IDs, if not provided, MD5 hash IDs will be generated
             file_paths: list of file paths corresponding to each document, used for citation
             track_id: tracking ID for monitoring processing status, if not provided, will be generated
+            publish_time: optional ISO8601 publish time; single value or list matching document count
 
         Returns:
             str: tracking ID for monitoring processing status
@@ -1183,7 +1188,9 @@ class LightRAG:
         if track_id is None:
             track_id = generate_track_id("insert")
 
-        await self.apipeline_enqueue_documents(input, ids, file_paths, track_id)
+        await self.apipeline_enqueue_documents(
+            input, ids, file_paths, track_id, publish_time
+        )
         await self.apipeline_process_enqueue_documents(
             split_by_character, split_by_character_only
         )
@@ -1268,6 +1275,7 @@ class LightRAG:
         ids: list[str] | None = None,
         file_paths: str | list[str] | None = None,
         track_id: str | None = None,
+        publish_time: str | list[str] | None = None,
     ) -> str:
         """
         Pipeline for Processing Documents
@@ -1282,6 +1290,7 @@ class LightRAG:
             ids: list of unique document IDs, if not provided, MD5 hash IDs will be generated
             file_paths: list of file paths corresponding to each document, used for citation
             track_id: tracking ID for monitoring processing status, if not provided, will be generated with "enqueue" prefix
+            publish_time: optional ISO8601 publish time; single value or list matching document count
 
         Returns:
             str: tracking ID for monitoring processing status
@@ -1295,6 +1304,8 @@ class LightRAG:
             ids = [ids]
         if isinstance(file_paths, str):
             file_paths = [file_paths]
+        if isinstance(publish_time, str):
+            publish_time = [publish_time] * len(input)
 
         # If file_paths is provided, ensure it matches the number of documents
         if file_paths is not None:
@@ -1308,6 +1319,15 @@ class LightRAG:
             # If no file paths provided, use placeholder
             file_paths = ["unknown_source"] * len(input)
 
+        # If publish_time is provided, ensure it matches the number of documents (or is single value already broadcast)
+        if publish_time is not None:
+            if len(publish_time) != len(input):
+                raise ValueError(
+                    "Number of publish_time values must match the number of documents"
+                )
+        else:
+            publish_time = [None] * len(input)
+
         # 1. Validate ids if provided or generate MD5 hash IDs and remove duplicate contents
         if ids is not None:
             # Check if the number of IDs matches the number of documents
@@ -1320,48 +1340,52 @@ class LightRAG:
 
             # Generate contents dict and remove duplicates in one pass
             unique_contents = {}
-            for id_, doc, path in zip(ids, input, file_paths):
+            for id_, doc, path, pub_time in zip(
+                ids, input, file_paths, publish_time
+            ):
                 cleaned_content = sanitize_text_for_encoding(doc)
                 if cleaned_content not in unique_contents:
-                    unique_contents[cleaned_content] = (id_, path)
+                    unique_contents[cleaned_content] = (id_, path, pub_time)
 
             # Reconstruct contents with unique content
-            contents = {
-                id_: {"content": content, "file_path": file_path}
-                for content, (id_, file_path) in unique_contents.items()
-            }
+            contents = {}
+            for content, (id_, file_path, pub_time) in unique_contents.items():
+                item = {"content": content, "file_path": file_path}
+                if pub_time is not None:
+                    item["publish_time"] = pub_time
+                contents[id_] = item
         else:
             # Clean input text and remove duplicates in one pass
             unique_content_with_paths = {}
-            for doc, path in zip(input, file_paths):
+            for doc, path, pub_time in zip(input, file_paths, publish_time):
                 cleaned_content = sanitize_text_for_encoding(doc)
                 if cleaned_content not in unique_content_with_paths:
-                    unique_content_with_paths[cleaned_content] = path
+                    unique_content_with_paths[cleaned_content] = (path, pub_time)
 
             # Generate contents dict of MD5 hash IDs and documents with paths
-            contents = {
-                compute_mdhash_id(content, prefix="doc-"): {
-                    "content": content,
-                    "file_path": path,
-                }
-                for content, path in unique_content_with_paths.items()
-            }
+            contents = {}
+            for content, (path, pub_time) in unique_content_with_paths.items():
+                doc_id = compute_mdhash_id(content, prefix="doc-")
+                item = {"content": content, "file_path": path}
+                if pub_time is not None:
+                    item["publish_time"] = pub_time
+                contents[doc_id] = item
 
         # 2. Generate document initial status (without content)
-        new_docs: dict[str, Any] = {
-            id_: {
+        new_docs = {}
+        for id_, content_data in contents.items():
+            doc_entry = {
                 "status": DocStatus.PENDING,
                 "content_summary": get_content_summary(content_data["content"]),
                 "content_length": len(content_data["content"]),
                 "created_at": datetime.now(timezone.utc).isoformat(),
                 "updated_at": datetime.now(timezone.utc).isoformat(),
-                "file_path": content_data[
-                    "file_path"
-                ],  # Store file path in document status
-                "track_id": track_id,  # Store track_id in document status
+                "file_path": content_data["file_path"],
+                "track_id": track_id,
             }
-            for id_, content_data in contents.items()
-        }
+            if "publish_time" in content_data:
+                doc_entry["publish_time"] = content_data["publish_time"]
+            new_docs[id_] = doc_entry
 
         # 3. Filter out already processed documents
         # Get docs ids
@@ -1424,13 +1448,15 @@ class LightRAG:
 
         # 4. Store document content in full_docs and status in doc_status
         #    Store full document content separately
-        full_docs_data = {
-            doc_id: {
+        full_docs_data = {}
+        for doc_id in new_docs.keys():
+            item = {
                 "content": contents[doc_id]["content"],
                 "file_path": contents[doc_id]["file_path"],
             }
-            for doc_id in new_docs.keys()
-        }
+            if "publish_time" in contents[doc_id]:
+                item["publish_time"] = contents[doc_id]["publish_time"]
+            full_docs_data[doc_id] = item
         await self.full_docs.upsert(full_docs_data)
         # Persist data to disk immediately
         await self.full_docs.index_done_callback()
@@ -1866,15 +1892,20 @@ class LightRAG:
                                 )
 
                             # Build chunks dictionary
-                            chunks: dict[str, Any] = {
-                                compute_mdhash_id(dp["content"], prefix="chunk-"): {
+                            doc_publish_time = content_data.get("publish_time")
+                            chunks: dict[str, Any] = {}
+                            for dp in chunking_result:
+                                chunk_entry = {
                                     **dp,
                                     "full_doc_id": doc_id,
-                                    "file_path": file_path,  # Add file path to each chunk
-                                    "llm_cache_list": [],  # Initialize empty LLM cache list for each chunk
+                                    "file_path": file_path,
+                                    "llm_cache_list": [],
                                 }
-                                for dp in chunking_result
-                            }
+                                if doc_publish_time is not None:
+                                    chunk_entry["publish_time"] = doc_publish_time
+                                chunks[
+                                    compute_mdhash_id(dp["content"], prefix="chunk-")
+                                ] = chunk_entry
 
                             if not chunks:
                                 logger.warning("No document chunks to process")

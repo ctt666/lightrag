@@ -75,6 +75,19 @@ from dotenv import load_dotenv
 load_dotenv(dotenv_path=Path(__file__).resolve().parent / ".env", override=False)
 
 
+def _is_publish_time_newer(
+    chunk_pt: str | None, existing_pt: str | None
+) -> bool:
+    """Return True if chunk_pt is strictly newer (later) than existing_pt.
+    ISO8601 strings compare lexicographically. None/empty is treated as unknown (not newer).
+    """
+    if not chunk_pt or not str(chunk_pt).strip():
+        return False
+    if not existing_pt or not str(existing_pt).strip():
+        return True
+    return str(chunk_pt).strip() > str(existing_pt).strip()
+
+
 def _truncate_entity_identifier(
     identifier: str, limit: int, chunk_key: str, identifier_role: str
 ) -> str:
@@ -376,11 +389,55 @@ async def _summarize_descriptions(
     return summary
 
 
+async def _summarize_entity_descriptions_with_latest(
+    existing_description: str,
+    chunk_description: str,
+    latest_obj: str,
+    entity_name: str,
+    global_config: dict,
+    llm_response_cache: BaseKVStorage | None = None,
+) -> str:
+    """Merge existing entity description and chunk description using time-based authority (latest_obj).
+    Used when both existing and new chunk descriptions are present; latest_obj is either
+    'Existing Description' or 'Chunk Description' (chosen by caller from publish_time comparison).
+    """
+    use_llm_func = global_config["llm_model_func"]
+    use_llm_func = partial(use_llm_func, _priority=8)
+    language = global_config["addon_params"].get("language", DEFAULT_SUMMARY_LANGUAGE)
+    summary_length_recommended = global_config["summary_length_recommended"]
+    prompt_template = PROMPTS["summarize_entity_descriptions_with_latest"]
+    context = dict(
+        description_name=entity_name,
+        existing_description=existing_description or "(none)",
+        chunk_description=chunk_description or "(none)",
+        latest_obj=latest_obj,
+        summary_length=summary_length_recommended,
+        language=language,
+    )
+    use_prompt = prompt_template.format(**context)
+    summary, _ = await use_llm_func_with_cache(
+        use_prompt,
+        use_llm_func,
+        llm_response_cache=llm_response_cache,
+        cache_type="summary",
+    )
+    embedding_token_limit = global_config.get("embedding_token_limit")
+    if embedding_token_limit is not None and summary:
+        tokenizer = global_config["tokenizer"]
+        summary_token_count = len(tokenizer.encode(summary))
+        if summary_token_count > int(embedding_token_limit):
+            logger.warning(
+                f"Summary tokens ({summary_token_count}) exceeds embedding_token_limit ({embedding_token_limit}) for entity: {entity_name}"
+            )
+    return summary or ""
+
+
 async def _handle_single_entity_extraction(
     record_attributes: list[str],
     chunk_key: str,
     timestamp: int,
     file_path: str = "unknown_source",
+    publish_time: str | None = None,
 ):
     if len(record_attributes) != 4 or "entity" not in record_attributes[0]:
         if len(record_attributes) > 1 and "entity" in record_attributes[0]:
@@ -442,7 +499,7 @@ async def _handle_single_entity_extraction(
             )
             return None
 
-        return dict(
+        result = dict(
             entity_name=entity_name,
             entity_type=entity_type,
             description=entity_description,
@@ -450,6 +507,9 @@ async def _handle_single_entity_extraction(
             file_path=file_path,
             timestamp=timestamp,
         )
+        if publish_time is not None:
+            result["publish_time"] = publish_time
+        return result
 
     except ValueError as e:
         logger.error(
@@ -468,6 +528,7 @@ async def _handle_single_relationship_extraction(
     chunk_key: str,
     timestamp: int,
     file_path: str = "unknown_source",
+    publish_time: str | None = None,
 ):
     if (
         len(record_attributes) != 5 or "relation" not in record_attributes[0]
@@ -527,7 +588,7 @@ async def _handle_single_relationship_extraction(
             else 1.0
         )
 
-        return dict(
+        result = dict(
             src_id=source,
             tgt_id=target,
             weight=weight,
@@ -537,6 +598,9 @@ async def _handle_single_relationship_extraction(
             file_path=file_path,
             timestamp=timestamp,
         )
+        if publish_time is not None:
+            result["publish_time"] = publish_time
+        return result
 
     except ValueError as e:
         logger.warning(
@@ -932,6 +996,7 @@ async def _process_extraction_result(
     chunk_key: str,
     timestamp: int,
     file_path: str = "unknown_source",
+    publish_time: str | None = None,
     tuple_delimiter: str = "<|#|>",
     completion_delimiter: str = "<|COMPLETE|>",
 ) -> tuple[dict, dict]:
@@ -940,6 +1005,7 @@ async def _process_extraction_result(
         result (str): The extraction result to process
         chunk_key (str): The chunk key for source tracking
         file_path (str): The file path for citation
+        publish_time (str | None): Optional ISO8601 publish time for the chunk
         tuple_delimiter (str): Delimiter for tuple fields
         record_delimiter (str): Delimiter for records
         completion_delimiter (str): Delimiter for completion
@@ -1015,7 +1081,7 @@ async def _process_extraction_result(
 
         # Try to parse as entity
         entity_data = await _handle_single_entity_extraction(
-            record_attributes, chunk_key, timestamp, file_path
+            record_attributes, chunk_key, timestamp, file_path, publish_time
         )
         if entity_data is not None:
             truncated_name = _truncate_entity_identifier(
@@ -1030,7 +1096,7 @@ async def _process_extraction_result(
 
         # Try to parse as relationship
         relationship_data = await _handle_single_relationship_extraction(
-            record_attributes, chunk_key, timestamp, file_path
+            record_attributes, chunk_key, timestamp, file_path, publish_time
         )
         if relationship_data is not None:
             truncated_source = _truncate_entity_identifier(
@@ -1069,13 +1135,14 @@ async def _rebuild_from_extraction_result(
         Tuple of (entities_dict, relationships_dict)
     """
 
-    # Get chunk data for file_path from storage
+    # Get chunk data for file_path and optional publish_time from storage
     chunk_data = await text_chunks_storage.get_by_id(chunk_id)
     file_path = (
         chunk_data.get("file_path", "unknown_source")
         if chunk_data
         else "unknown_source"
     )
+    publish_time = chunk_data.get("publish_time") if chunk_data else None
 
     # Call the shared processing function
     return await _process_extraction_result(
@@ -1083,6 +1150,7 @@ async def _rebuild_from_extraction_result(
         chunk_id,
         timestamp,
         file_path,
+        publish_time,
         tuple_delimiter=PROMPTS["DEFAULT_TUPLE_DELIMITER"],
         completion_delimiter=PROMPTS["DEFAULT_COMPLETION_DELIMITER"],
     )
@@ -1144,6 +1212,8 @@ async def _rebuild_single_entity(
                     "file_path": updated_entity_data["file_path"],
                 }
             }
+            if updated_entity_data.get("publish_time") is not None:
+                vdb_data[entity_vdb_id]["publish_time"] = updated_entity_data["publish_time"]
 
             # Use safe operation wrapper - VDB failure must throw exception
             await safe_vdb_operation_with_exception(
@@ -1776,15 +1846,39 @@ async def _merge_nodes_then_upsert(
             if pipeline_status.get("cancellation_requested", False):
                 raise PipelineCancelledException("User cancelled during entity summary")
 
-    # 8. Get summary description an LLM usage status
-    description, llm_was_used = await _handle_entity_relation_summary(
-        "Entity",
-        entity_name,
-        description_list,
-        GRAPH_FIELD_SEP,
-        global_config,
-        llm_response_cache,
-    )
+    # 8. Get summary description: time-aware merge when both existing and chunk descriptions present
+    existing_pt = already_node.get("publish_time") if already_node else None
+    chunk_pt = nodes_data[0].get("publish_time") if nodes_data else None
+    if already_description and sorted_descriptions:
+        latest_obj = (
+            "Chunk Description"
+            if _is_publish_time_newer(chunk_pt, existing_pt)
+            else "Existing Description"
+        )
+        logger.info(
+            f"Entity desc merge (time-aware): entity={entity_name!r} existing_publish_time={existing_pt!r} "
+            f"chunk_publish_time={chunk_pt!r} latest_obj={latest_obj!r}"
+        )
+        existing_description_text = GRAPH_FIELD_SEP.join(already_description)
+        chunk_description_text = GRAPH_FIELD_SEP.join(sorted_descriptions)
+        description = await _summarize_entity_descriptions_with_latest(
+            existing_description_text,
+            chunk_description_text,
+            latest_obj,
+            entity_name,
+            global_config,
+            llm_response_cache,
+        )
+        llm_was_used = True
+    else:
+        description, llm_was_used = await _handle_entity_relation_summary(
+            "Entity",
+            entity_name,
+            description_list,
+            GRAPH_FIELD_SEP,
+            global_config,
+            llm_response_cache,
+        )
 
     # 9. Build file_path within MAX_FILE_PATHS
     file_paths_list = []
@@ -1879,6 +1973,19 @@ async def _merge_nodes_then_upsert(
         logger.debug(status_message)
 
     # 11. Update both graph and vector db
+    # publish_time: only update when chunk's publish_time is newer than existing (or no existing)
+    chunk_pt = (
+        nodes_data[0].get("publish_time")
+        if nodes_data
+        else None
+    )
+    existing_pt = already_node.get("publish_time") if already_node else None
+    entity_publish_time = (
+        chunk_pt
+        if _is_publish_time_newer(chunk_pt, existing_pt)
+        else existing_pt
+    )
+
     node_data = dict(
         entity_id=entity_name,
         entity_type=entity_type,
@@ -1888,6 +1995,8 @@ async def _merge_nodes_then_upsert(
         created_at=int(time.time()),
         truncate=truncation_info,
     )
+    if entity_publish_time is not None:
+        node_data["publish_time"] = entity_publish_time
     await knowledge_graph_inst.upsert_node(
         entity_name,
         node_data=node_data,
@@ -1905,6 +2014,8 @@ async def _merge_nodes_then_upsert(
                 "file_path": file_path,
             }
         }
+        if entity_publish_time is not None:
+            data_for_vdb[entity_vdb_id]["publish_time"] = entity_publish_time
         await safe_vdb_operation_with_exception(
             operation=lambda payload=data_for_vdb: entity_vdb.upsert(payload),
             operation_name="entity_upsert",
@@ -2209,6 +2320,19 @@ async def _merge_edges_then_upsert(
     else:
         logger.debug(status_message)
 
+    # Relation publish_time: only update when chunk's publish_time is newer than existing (or no existing)
+    chunk_pt = (
+        edges_data[0].get("publish_time")
+        if edges_data
+        else None
+    )
+    existing_pt = already_edge.get("publish_time") if already_edge else None
+    relation_publish_time = (
+        chunk_pt
+        if _is_publish_time_newer(chunk_pt, existing_pt)
+        else existing_pt
+    )
+
     # 11. Update both graph and vector db
     for need_insert_id in [src_id, tgt_id]:
         # Optimization: Use get_node instead of has_node + get_node
@@ -2226,6 +2350,8 @@ async def _merge_edges_then_upsert(
                 "created_at": node_created_at,
                 "truncate": "",
             }
+            if relation_publish_time is not None:
+                node_data["publish_time"] = relation_publish_time
             await knowledge_graph_inst.upsert_node(need_insert_id, node_data=node_data)
 
             # Update entity_chunks_storage for the newly created entity
@@ -2253,6 +2379,8 @@ async def _merge_edges_then_upsert(
                         "file_path": file_path,
                     }
                 }
+                if relation_publish_time is not None:
+                    vdb_data[entity_vdb_id]["publish_time"] = relation_publish_time
                 await safe_vdb_operation_with_exception(
                     operation=lambda payload=vdb_data: entity_vdb.upsert(payload),
                     operation_name="added_entity_upsert",
@@ -2377,18 +2505,21 @@ async def _merge_edges_then_upsert(
                         pipeline_status["history_messages"].append(status_message)
 
     edge_created_at = int(time.time())
+    edge_payload = dict(
+        weight=weight,
+        description=description,
+        keywords=keywords,
+        source_id=source_id,
+        file_path=file_path,
+        created_at=edge_created_at,
+        truncate=truncation_info,
+    )
+    if relation_publish_time is not None:
+        edge_payload["publish_time"] = relation_publish_time
     await knowledge_graph_inst.upsert_edge(
         src_id,
         tgt_id,
-        edge_data=dict(
-            weight=weight,
-            description=description,
-            keywords=keywords,
-            source_id=source_id,
-            file_path=file_path,
-            created_at=edge_created_at,
-            truncate=truncation_info,
-        ),
+        edge_data=edge_payload,
     )
 
     edge_data = dict(
@@ -2402,6 +2533,8 @@ async def _merge_edges_then_upsert(
         truncate=truncation_info,
         weight=weight,
     )
+    if relation_publish_time is not None:
+        edge_data["publish_time"] = relation_publish_time
 
     # Sort src_id and tgt_id to ensure consistent ordering (smaller string first)
     if src_id > tgt_id:
@@ -2429,6 +2562,8 @@ async def _merge_edges_then_upsert(
                 "file_path": file_path,
             }
         }
+        if relation_publish_time is not None:
+            vdb_data[rel_vdb_id]["publish_time"] = relation_publish_time
         await safe_vdb_operation_with_exception(
             operation=lambda payload=vdb_data: relationships_vdb.upsert(payload),
             operation_name="relationship_upsert",
@@ -2870,8 +3005,9 @@ async def extract_entities(
         chunk_key = chunk_key_dp[0]
         chunk_dp = chunk_key_dp[1]
         content = chunk_dp["content"]
-        # Get file path from chunk data or use default
+        # Get file path and optional publish_time from chunk data
         file_path = chunk_dp.get("file_path", "unknown_source")
+        publish_time = chunk_dp.get("publish_time")
 
         # Create cache keys collector for batch processing
         cache_keys_collector = []
@@ -2903,12 +3039,13 @@ async def extract_entities(
             entity_extraction_user_prompt, final_result
         )
 
-        # Process initial extraction with file path
+        # Process initial extraction with file path and optional publish_time
         maybe_nodes, maybe_edges = await _process_extraction_result(
             final_result,
             chunk_key,
             timestamp,
             file_path,
+            publish_time,
             tuple_delimiter=context_base["tuple_delimiter"],
             completion_delimiter=context_base["completion_delimiter"],
         )
@@ -2946,12 +3083,13 @@ async def extract_entities(
                     cache_keys_collector=cache_keys_collector,
                 )
 
-                # Process gleaning result separately with file path
+                # Process gleaning result separately with file path and publish_time
                 glean_nodes, glean_edges = await _process_extraction_result(
                     glean_result,
                     chunk_key,
                     timestamp,
                     file_path,
+                    publish_time,
                     tuple_delimiter=context_base["tuple_delimiter"],
                     completion_delimiter=context_base["completion_delimiter"],
                 )

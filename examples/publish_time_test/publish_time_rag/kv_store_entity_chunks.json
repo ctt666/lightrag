@@ -1,0 +1,137 @@
+{
+  "StarOcean Tech": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a",
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "count": 2,
+    "update_time": 1772607007,
+    "_id": "StarOcean Tech"
+  },
+  "Beijing": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a"
+    ],
+    "count": 1,
+    "create_time": 1772606947,
+    "update_time": 1772606947,
+    "_id": "Beijing"
+  },
+  "Office Software": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a"
+    ],
+    "count": 1,
+    "create_time": 1772606947,
+    "update_time": 1772606947,
+    "_id": "Office Software"
+  },
+  "Li Jianguo": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a",
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "count": 2,
+    "update_time": 1772607007,
+    "_id": "Li Jianguo"
+  },
+  "星海科技": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a"
+    ],
+    "count": 1,
+    "create_time": 1772606947,
+    "update_time": 1772606947,
+    "_id": "星海科技"
+  },
+  "北京": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a"
+    ],
+    "count": 1,
+    "create_time": 1772606947,
+    "update_time": 1772606947,
+    "_id": "北京"
+  },
+  "李建国": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a",
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "count": 2,
+    "update_time": 1772607008,
+    "_id": "李建国"
+  },
+  "办公软件": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a"
+    ],
+    "count": 1,
+    "create_time": 1772606947,
+    "update_time": 1772606947,
+    "_id": "办公软件"
+  },
+  "中国": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a",
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "count": 2,
+    "update_time": 1772607007,
+    "_id": "中国"
+  },
+  "1990": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a"
+    ],
+    "count": 1,
+    "create_time": 1772606948,
+    "update_time": 1772606948,
+    "_id": "1990"
+  },
+  "China": {
+    "chunk_ids": [
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "count": 1,
+    "create_time": 1772607007,
+    "update_time": 1772607007,
+    "_id": "China"
+  },
+  "Shanghai": {
+    "chunk_ids": [
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "count": 1,
+    "create_time": 1772607007,
+    "update_time": 1772607007,
+    "_id": "Shanghai"
+  },
+  "Cloud Computing Services": {
+    "chunk_ids": [
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "count": 1,
+    "create_time": 1772607007,
+    "update_time": 1772607007,
+    "_id": "Cloud Computing Services"
+  },
+  "2005": {
+    "chunk_ids": [
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "count": 1,
+    "create_time": 1772607007,
+    "update_time": 1772607007,
+    "_id": "2005"
+  },
+  "上海": {
+    "chunk_ids": [
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "count": 1,
+    "create_time": 1772607007,
+    "update_time": 1772607007,
+    "_id": "上海"
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "doc-9b155c27876eb17812cb63a8ef361b5a": {
+    "status": "processed",
+    "chunks_count": 1,
+    "chunks_list": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a"
+    ],
+    "content_summary": "星海科技（StarOcean Tech）是一家中国科技公司，成立于1990年，总部位于北京。该公司主要产品为办公软件，创始人李建国。",
+    "content_length": 66,
+    "created_at": "2026-03-04T06:36:35.133959+00:00",
+    "updated_at": "2026-03-04T06:49:10.925954+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260304_143635_3559e3f6",
+    "metadata": {
+      "processing_start_time": 1772606777,
+      "processing_end_time": 1772606950
+    }
+  },
+  "dup-b8da4f2a1dd57fd962e4890d5edee6c4": {
+    "status": "failed",
+    "content_summary": "[DUPLICATE] Original document: doc-9b155c27876eb17812cb63a8ef361b5a",
+    "content_length": 66,
+    "created_at": "2026-03-04T06:41:25.893016+00:00",
+    "updated_at": "2026-03-04T06:41:25.893021+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260304_144125_1e065fd5",
+    "error_msg": "Content already exists. Original doc_id: doc-9b155c27876eb17812cb63a8ef361b5a, Status: pending",
+    "metadata": {
+      "is_duplicate": true,
+      "original_doc_id": "doc-9b155c27876eb17812cb63a8ef361b5a",
+      "original_track_id": "insert_20260304_143635_3559e3f6"
+    },
+    "chunks_list": []
+  },
+  "doc-633c54bd78902f36f87a705e0c1e6f4e": {
+    "status": "processed",
+    "chunks_count": 1,
+    "chunks_list": [
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "content_summary": "星海科技（StarOcean Tech）是一家中国科技公司，成立于2005年，总部位于上海。该公司主要产品为云计算服务，创始人李建国。",
+    "content_length": 67,
+    "created_at": "2026-03-04T06:41:32.454568+00:00",
+    "updated_at": "2026-03-04T06:51:37.957461+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260304_144132_bc3a13ab",
+    "metadata": {
+      "processing_start_time": 1772606777,
+      "processing_end_time": 1772607097
+    }
+  },
+  "dup-e8a9f5598319e07b6469e3e4facc6609": {
+    "status": "failed",
+    "content_summary": "[DUPLICATE] Original document: doc-9b155c27876eb17812cb63a8ef361b5a",
+    "content_length": 66,
+    "created_at": "2026-03-04T06:45:38.747151+00:00",
+    "updated_at": "2026-03-04T06:45:38.747156+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260304_144538_0b44c9f1",
+    "error_msg": "Content already exists. Original doc_id: doc-9b155c27876eb17812cb63a8ef361b5a, Status: failed",
+    "metadata": {
+      "is_duplicate": true,
+      "original_doc_id": "doc-9b155c27876eb17812cb63a8ef361b5a",
+      "original_track_id": "insert_20260304_143635_3559e3f6"
+    },
+    "chunks_list": []
+  },
+  "dup-69cb6daf7711842466118c7d435f53fe": {
+    "status": "failed",
+    "content_summary": "[DUPLICATE] Original document: doc-633c54bd78902f36f87a705e0c1e6f4e",
+    "content_length": 67,
+    "created_at": "2026-03-04T06:45:39.714804+00:00",
+    "updated_at": "2026-03-04T06:45:39.714811+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260304_144539_9c5ac4a4",
+    "error_msg": "Content already exists. Original doc_id: doc-633c54bd78902f36f87a705e0c1e6f4e, Status: DocStatus.FAILED",
+    "metadata": {
+      "is_duplicate": true,
+      "original_doc_id": "doc-633c54bd78902f36f87a705e0c1e6f4e",
+      "original_track_id": "insert_20260304_144132_bc3a13ab"
+    },
+    "chunks_list": []
+  },
+  "dup-271d36fb937e2cb79a04c7ca8851fe88": {
+    "status": "failed",
+    "content_summary": "[DUPLICATE] Original document: doc-9b155c27876eb17812cb63a8ef361b5a",
+    "content_length": 66,
+    "created_at": "2026-03-04T06:46:17.370468+00:00",
+    "updated_at": "2026-03-04T06:46:17.370471+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260304_144617_619a9c17",
+    "error_msg": "Content already exists. Original doc_id: doc-9b155c27876eb17812cb63a8ef361b5a, Status: failed",
+    "metadata": {
+      "is_duplicate": true,
+      "original_doc_id": "doc-9b155c27876eb17812cb63a8ef361b5a",
+      "original_track_id": "insert_20260304_143635_3559e3f6"
+    },
+    "chunks_list": []
+  },
+  "dup-019eb2596a39d4f7b975842f215a074e": {
+    "status": "failed",
+    "content_summary": "[DUPLICATE] Original document: doc-633c54bd78902f36f87a705e0c1e6f4e",
+    "content_length": 67,
+    "created_at": "2026-03-04T06:51:38.003400+00:00",
+    "updated_at": "2026-03-04T06:51:38.003405+00:00",
+    "file_path": "unknown_source",
+    "track_id": "insert_20260304_145138_493d593d",
+    "error_msg": "Content already exists. Original doc_id: doc-633c54bd78902f36f87a705e0c1e6f4e, Status: DocStatus.PROCESSED",
+    "metadata": {
+      "is_duplicate": true,
+      "original_doc_id": "doc-633c54bd78902f36f87a705e0c1e6f4e",
+      "original_track_id": "insert_20260304_144132_bc3a13ab"
+    },
+    "chunks_list": []
+  }
+}

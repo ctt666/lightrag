@@ -1,0 +1,137 @@
+{
+  "Beijing<SEP>StarOcean Tech": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a"
+    ],
+    "count": 1,
+    "create_time": 1772606948,
+    "update_time": 1772606948,
+    "_id": "Beijing<SEP>StarOcean Tech"
+  },
+  "北京<SEP>星海科技": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a"
+    ],
+    "count": 1,
+    "create_time": 1772606948,
+    "update_time": 1772606948,
+    "_id": "北京<SEP>星海科技"
+  },
+  "Office Software<SEP>StarOcean Tech": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a"
+    ],
+    "count": 1,
+    "create_time": 1772606949,
+    "update_time": 1772606949,
+    "_id": "Office Software<SEP>StarOcean Tech"
+  },
+  "办公软件<SEP>星海科技": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a"
+    ],
+    "count": 1,
+    "create_time": 1772606949,
+    "update_time": 1772606949,
+    "_id": "办公软件<SEP>星海科技"
+  },
+  "Li Jianguo<SEP>StarOcean Tech": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a",
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "count": 2,
+    "update_time": 1772607095,
+    "_id": "Li Jianguo<SEP>StarOcean Tech"
+  },
+  "星海科技<SEP>李建国": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a"
+    ],
+    "count": 1,
+    "create_time": 1772606949,
+    "update_time": 1772606949,
+    "_id": "星海科技<SEP>李建国"
+  },
+  "中国<SEP>星海科技": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a"
+    ],
+    "count": 1,
+    "create_time": 1772606950,
+    "update_time": 1772606950,
+    "_id": "中国<SEP>星海科技"
+  },
+  "1990<SEP>星海科技": {
+    "chunk_ids": [
+      "chunk-9b155c27876eb17812cb63a8ef361b5a"
+    ],
+    "count": 1,
+    "create_time": 1772606950,
+    "update_time": 1772606950,
+    "_id": "1990<SEP>星海科技"
+  },
+  "China<SEP>StarOcean Tech": {
+    "chunk_ids": [
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "count": 1,
+    "create_time": 1772607094,
+    "update_time": 1772607094,
+    "_id": "China<SEP>StarOcean Tech"
+  },
+  "Shanghai<SEP>StarOcean Tech": {
+    "chunk_ids": [
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "count": 1,
+    "create_time": 1772607095,
+    "update_time": 1772607095,
+    "_id": "Shanghai<SEP>StarOcean Tech"
+  },
+  "Cloud Computing Services<SEP>StarOcean Tech": {
+    "chunk_ids": [
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "count": 1,
+    "create_time": 1772607096,
+    "update_time": 1772607096,
+    "_id": "Cloud Computing Services<SEP>StarOcean Tech"
+  },
+  "2005<SEP>StarOcean Tech": {
+    "chunk_ids": [
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "count": 1,
+    "create_time": 1772607096,
+    "update_time": 1772607096,
+    "_id": "2005<SEP>StarOcean Tech"
+  },
+  "StarOcean Tech<SEP>中国": {
+    "chunk_ids": [
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "count": 1,
+    "create_time": 1772607096,
+    "update_time": 1772607096,
+    "_id": "StarOcean Tech<SEP>中国"
+  },
+  "StarOcean Tech<SEP>上海": {
+    "chunk_ids": [
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "count": 1,
+    "create_time": 1772607097,
+    "update_time": 1772607097,
+    "_id": "StarOcean Tech<SEP>上海"
+  },
+  "StarOcean Tech<SEP>李建国": {
+    "chunk_ids": [
+      "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+    ],
+    "count": 1,
+    "create_time": 1772607097,
+    "update_time": 1772607097,
+    "_id": "StarOcean Tech<SEP>李建国"
+  }
+}

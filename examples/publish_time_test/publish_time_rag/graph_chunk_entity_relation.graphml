@@ -1,0 +1,321 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d15" for="edge" attr.name="publish_time" attr.type="string" />
+  <key id="d14" for="edge" attr.name="truncate" attr.type="string" />
+  <key id="d13" for="edge" attr.name="created_at" attr.type="long" />
+  <key id="d12" for="edge" attr.name="file_path" attr.type="string" />
+  <key id="d11" for="edge" attr.name="source_id" attr.type="string" />
+  <key id="d10" for="edge" attr.name="keywords" attr.type="string" />
+  <key id="d9" for="edge" attr.name="description" attr.type="string" />
+  <key id="d8" for="edge" attr.name="weight" attr.type="double" />
+  <key id="d7" for="node" attr.name="publish_time" attr.type="string" />
+  <key id="d6" for="node" attr.name="truncate" attr.type="string" />
+  <key id="d5" for="node" attr.name="created_at" attr.type="long" />
+  <key id="d4" for="node" attr.name="file_path" attr.type="string" />
+  <key id="d3" for="node" attr.name="source_id" attr.type="string" />
+  <key id="d2" for="node" attr.name="description" attr.type="string" />
+  <key id="d1" for="node" attr.name="entity_type" attr.type="string" />
+  <key id="d0" for="node" attr.name="entity_id" attr.type="string" />
+  <graph edgedefault="undirected">
+    <node id="StarOcean Tech">
+      <data key="d0">StarOcean Tech</data>
+      <data key="d1">organization</data>
+      <data key="d2">StarOcean Tech is a Chinese technology company. A contradiction exists between the existing description and the chunk description regarding its founding year and headquarters. Although the existing description stated a 1990 founding date and Beijing headquarters, the chunk description is treated as the authoritative source and supersedes this data. Consequently, StarOcean Tech was founded in 2005 and is headquartered in Shanghai.</data>
+      <data key="d3">chunk-9b155c27876eb17812cb63a8ef361b5a&lt;SEP&gt;chunk-633c54bd78902f36f87a705e0c1e6f4e</data>
+      <data key="d4">unknown_source</data>
+      <data key="d5">1772607076</data>
+      <data key="d6" />
+      <data key="d7">2024-06-01T00:00:00Z</data>
+    </node>
+    <node id="Beijing">
+      <data key="d0">Beijing</data>
+      <data key="d1">location</data>
+      <data key="d2">Beijing is the city where StarOcean Tech is headquartered.</data>
+      <data key="d3">chunk-9b155c27876eb17812cb63a8ef361b5a</data>
+      <data key="d4">unknown_source</data>
+      <data key="d5">1772606947</data>
+      <data key="d6" />
+      <data key="d7">2023-01-01T00:00:00Z</data>
+    </node>
+    <node id="Office Software">
+      <data key="d0">Office Software</data>
+      <data key="d1">artifact</data>
+      <data key="d2">Office software is the main product produced by StarOcean Tech.</data>
+      <data key="d3">chunk-9b155c27876eb17812cb63a8ef361b5a</data>
+      <data key="d4">unknown_source</data>
+      <data key="d5">1772606947</data>
+      <data key="d6" />
+      <data key="d7">2023-01-01T00:00:00Z</data>
+    </node>
+    <node id="Li Jianguo">
+      <data key="d0">Li Jianguo</data>
+      <data key="d1">person</data>
+      <data key="d2">Li Jianguo is the founder of StarOcean Tech.</data>
+      <data key="d3">chunk-9b155c27876eb17812cb63a8ef361b5a&lt;SEP&gt;chunk-633c54bd78902f36f87a705e0c1e6f4e</data>
+      <data key="d4">unknown_source</data>
+      <data key="d5">1772607026</data>
+      <data key="d6" />
+      <data key="d7">2024-06-01T00:00:00Z</data>
+    </node>
+    <node id="星海科技">
+      <data key="d0">星海科技</data>
+      <data key="d1">organization</data>
+      <data key="d2">StarOcean Tech is a Chinese technology company founded in 1990 with headquarters in Beijing.</data>
+      <data key="d3">chunk-9b155c27876eb17812cb63a8ef361b5a</data>
+      <data key="d4">unknown_source</data>
+      <data key="d5">1772606948</data>
+      <data key="d6" />
+      <data key="d7">2023-01-01T00:00:00Z</data>
+    </node>
+    <node id="北京">
+      <data key="d0">北京</data>
+      <data key="d1">location</data>
+      <data key="d2">Beijing is the city where StarOcean Tech is headquartered.</data>
+      <data key="d3">chunk-9b155c27876eb17812cb63a8ef361b5a</data>
+      <data key="d4">unknown_source</data>
+      <data key="d5">1772606948</data>
+      <data key="d6" />
+      <data key="d7">2023-01-01T00:00:00Z</data>
+    </node>
+    <node id="李建国">
+      <data key="d0">李建国</data>
+      <data key="d1">person</data>
+      <data key="d2">Li Jianguo is the founder of StarOcean Tech, named in the original text.</data>
+      <data key="d3">chunk-9b155c27876eb17812cb63a8ef361b5a&lt;SEP&gt;chunk-633c54bd78902f36f87a705e0c1e6f4e</data>
+      <data key="d4">unknown_source</data>
+      <data key="d5">1772607094</data>
+      <data key="d6" />
+      <data key="d7">2024-06-01T00:00:00Z</data>
+    </node>
+    <node id="办公软件">
+      <data key="d0">办公软件</data>
+      <data key="d1">artifact</data>
+      <data key="d2">Office software is the main product produced by StarOcean Tech.</data>
+      <data key="d3">chunk-9b155c27876eb17812cb63a8ef361b5a</data>
+      <data key="d4">unknown_source</data>
+      <data key="d5">1772606948</data>
+      <data key="d6" />
+      <data key="d7">2023-01-01T00:00:00Z</data>
+    </node>
+    <node id="中国">
+      <data key="d0">中国</data>
+      <data key="d1">location</data>
+      <data key="d2">China is the country where StarOcean Tech is located, originated, and based, and is mentioned as the company's nationality.</data>
+      <data key="d3">chunk-9b155c27876eb17812cb63a8ef361b5a&lt;SEP&gt;chunk-633c54bd78902f36f87a705e0c1e6f4e</data>
+      <data key="d4">unknown_source</data>
+      <data key="d5">1772607042</data>
+      <data key="d6" />
+      <data key="d7">2024-06-01T00:00:00Z</data>
+    </node>
+    <node id="1990">
+      <data key="d0">1990</data>
+      <data key="d1">data</data>
+      <data key="d2">1990 is the founding year of StarOcean Tech.</data>
+      <data key="d3">chunk-9b155c27876eb17812cb63a8ef361b5a</data>
+      <data key="d4">unknown_source</data>
+      <data key="d5">1772606948</data>
+      <data key="d6" />
+      <data key="d7">2023-01-01T00:00:00Z</data>
+    </node>
+    <node id="China">
+      <data key="d0">China</data>
+      <data key="d1">location</data>
+      <data key="d2">China is the country where StarOcean Tech is based.</data>
+      <data key="d3">chunk-633c54bd78902f36f87a705e0c1e6f4e</data>
+      <data key="d4">unknown_source</data>
+      <data key="d5">1772607007</data>
+      <data key="d6" />
+      <data key="d7">2024-06-01T00:00:00Z</data>
+    </node>
+    <node id="Shanghai">
+      <data key="d0">Shanghai</data>
+      <data key="d1">location</data>
+      <data key="d2">Shanghai is the headquarters location of StarOcean Tech.</data>
+      <data key="d3">chunk-633c54bd78902f36f87a705e0c1e6f4e</data>
+      <data key="d4">unknown_source</data>
+      <data key="d5">1772607007</data>
+      <data key="d6" />
+      <data key="d7">2024-06-01T00:00:00Z</data>
+    </node>
+    <node id="Cloud Computing Services">
+      <data key="d0">Cloud Computing Services</data>
+      <data key="d1">concept</data>
+      <data key="d2">Cloud computing services are the main product offered by StarOcean Tech.</data>
+      <data key="d3">chunk-633c54bd78902f36f87a705e0c1e6f4e</data>
+      <data key="d4">unknown_source</data>
+      <data key="d5">1772607007</data>
+      <data key="d6" />
+      <data key="d7">2024-06-01T00:00:00Z</data>
+    </node>
+    <node id="2005">
+      <data key="d0">2005</data>
+      <data key="d1">data</data>
+      <data key="d2">2005 is the founding year of StarOcean Tech.</data>
+      <data key="d3">chunk-633c54bd78902f36f87a705e0c1e6f4e</data>
+      <data key="d4">unknown_source</data>
+      <data key="d5">1772607007</data>
+      <data key="d6" />
+      <data key="d7">2024-06-01T00:00:00Z</data>
+    </node>
+    <node id="上海">
+      <data key="d0">上海</data>
+      <data key="d1">location</data>
+      <data key="d2">Shanghai is the headquarters location of StarOcean Tech, explicitly stated in the text.</data>
+      <data key="d3">chunk-633c54bd78902f36f87a705e0c1e6f4e</data>
+      <data key="d4">unknown_source</data>
+      <data key="d5">1772607007</data>
+      <data key="d6" />
+      <data key="d7">2024-06-01T00:00:00Z</data>
+    </node>
+    <edge source="StarOcean Tech" target="Beijing">
+      <data key="d8">1.0</data>
+      <data key="d9">StarOcean Tech is headquartered in Beijing.</data>
+      <data key="d10">headquarters,location</data>
+      <data key="d11">chunk-9b155c27876eb17812cb63a8ef361b5a</data>
+      <data key="d12">unknown_source</data>
+      <data key="d13">1772606948</data>
+      <data key="d14" />
+      <data key="d15">2023-01-01T00:00:00Z</data>
+    </edge>
+    <edge source="StarOcean Tech" target="Office Software">
+      <data key="d8">1.0</data>
+      <data key="d9">StarOcean Tech produces office software as the main product.</data>
+      <data key="d10">manufacturing,product development</data>
+      <data key="d11">chunk-9b155c27876eb17812cb63a8ef361b5a</data>
+      <data key="d12">unknown_source</data>
+      <data key="d13">1772606949</data>
+      <data key="d14" />
+      <data key="d15">2023-01-01T00:00:00Z</data>
+    </edge>
+    <edge source="StarOcean Tech" target="Li Jianguo">
+      <data key="d8">2.0</data>
+      <data key="d9">Li Jianguo founded StarOcean Tech.&lt;SEP&gt;Li Jianguo is the founder of StarOcean Tech.</data>
+      <data key="d10">establishment,founder,leadership</data>
+      <data key="d11">chunk-9b155c27876eb17812cb63a8ef361b5a&lt;SEP&gt;chunk-633c54bd78902f36f87a705e0c1e6f4e</data>
+      <data key="d12">unknown_source</data>
+      <data key="d13">1772607095</data>
+      <data key="d14" />
+      <data key="d15">2024-06-01T00:00:00Z</data>
+    </edge>
+    <edge source="StarOcean Tech" target="China">
+      <data key="d8">1.0</data>
+      <data key="d9">StarOcean Tech is identified as a Chinese company located in China.</data>
+      <data key="d10">location,origin</data>
+      <data key="d11">chunk-633c54bd78902f36f87a705e0c1e6f4e</data>
+      <data key="d12">unknown_source</data>
+      <data key="d13">1772607094</data>
+      <data key="d14" />
+      <data key="d15">2024-06-01T00:00:00Z</data>
+    </edge>
+    <edge source="StarOcean Tech" target="Shanghai">
+      <data key="d8">1.0</data>
+      <data key="d9">StarOcean Tech has its headquarters in Shanghai.</data>
+      <data key="d10">headquarters,location</data>
+      <data key="d11">chunk-633c54bd78902f36f87a705e0c1e6f4e</data>
+      <data key="d12">unknown_source</data>
+      <data key="d13">1772607095</data>
+      <data key="d14" />
+      <data key="d15">2024-06-01T00:00:00Z</data>
+    </edge>
+    <edge source="StarOcean Tech" target="Cloud Computing Services">
+      <data key="d8">1.0</data>
+      <data key="d9">StarOcean Tech's main product is cloud computing services.</data>
+      <data key="d10">product,service</data>
+      <data key="d11">chunk-633c54bd78902f36f87a705e0c1e6f4e</data>
+      <data key="d12">unknown_source</data>
+      <data key="d13">1772607096</data>
+      <data key="d14" />
+      <data key="d15">2024-06-01T00:00:00Z</data>
+    </edge>
+    <edge source="StarOcean Tech" target="2005">
+      <data key="d8">1.0</data>
+      <data key="d9">StarOcean Tech was established in 2005.</data>
+      <data key="d10">founding date,time</data>
+      <data key="d11">chunk-633c54bd78902f36f87a705e0c1e6f4e</data>
+      <data key="d12">unknown_source</data>
+      <data key="d13">1772607096</data>
+      <data key="d14" />
+      <data key="d15">2024-06-01T00:00:00Z</data>
+    </edge>
+    <edge source="StarOcean Tech" target="中国">
+      <data key="d8">1.0</data>
+      <data key="d9">StarOcean Tech is identified as a Chinese company located in China.</data>
+      <data key="d10">location,origin</data>
+      <data key="d11">chunk-633c54bd78902f36f87a705e0c1e6f4e</data>
+      <data key="d12">unknown_source</data>
+      <data key="d13">1772607096</data>
+      <data key="d14" />
+      <data key="d15">2024-06-01T00:00:00Z</data>
+    </edge>
+    <edge source="StarOcean Tech" target="上海">
+      <data key="d8">1.0</data>
+      <data key="d9">StarOcean Tech has its headquarters in Shanghai.</data>
+      <data key="d10">headquarters,location</data>
+      <data key="d11">chunk-633c54bd78902f36f87a705e0c1e6f4e</data>
+      <data key="d12">unknown_source</data>
+      <data key="d13">1772607097</data>
+      <data key="d14" />
+      <data key="d15">2024-06-01T00:00:00Z</data>
+    </edge>
+    <edge source="StarOcean Tech" target="李建国">
+      <data key="d8">1.0</data>
+      <data key="d9">Li Jianguo is the founder of StarOcean Tech.</data>
+      <data key="d10">founder,leadership</data>
+      <data key="d11">chunk-633c54bd78902f36f87a705e0c1e6f4e</data>
+      <data key="d12">unknown_source</data>
+      <data key="d13">1772607097</data>
+      <data key="d14" />
+      <data key="d15">2024-06-01T00:00:00Z</data>
+    </edge>
+    <edge source="星海科技" target="北京">
+      <data key="d8">1.0</data>
+      <data key="d9">StarOcean Tech is headquartered in Beijing.</data>
+      <data key="d10">headquarters,location</data>
+      <data key="d11">chunk-9b155c27876eb17812cb63a8ef361b5a</data>
+      <data key="d12">unknown_source</data>
+      <data key="d13">1772606948</data>
+      <data key="d14" />
+      <data key="d15">2023-01-01T00:00:00Z</data>
+    </edge>
+    <edge source="星海科技" target="办公软件">
+      <data key="d8">1.0</data>
+      <data key="d9">StarOcean Tech produces office software as the main product.</data>
+      <data key="d10">manufacturing,product development</data>
+      <data key="d11">chunk-9b155c27876eb17812cb63a8ef361b5a</data>
+      <data key="d12">unknown_source</data>
+      <data key="d13">1772606949</data>
+      <data key="d14" />
+      <data key="d15">2023-01-01T00:00:00Z</data>
+    </edge>
+    <edge source="星海科技" target="李建国">
+      <data key="d8">1.0</data>
+      <data key="d9">Li Jianguo founded StarOcean Tech.</data>
+      <data key="d10">establishment,founder</data>
+      <data key="d11">chunk-9b155c27876eb17812cb63a8ef361b5a</data>
+      <data key="d12">unknown_source</data>
+      <data key="d13">1772606949</data>
+      <data key="d14" />
+      <data key="d15">2023-01-01T00:00:00Z</data>
+    </edge>
+    <edge source="星海科技" target="中国">
+      <data key="d8">1.0</data>
+      <data key="d9">StarOcean Tech is a Chinese company located in China.</data>
+      <data key="d10">country of origin,location</data>
+      <data key="d11">chunk-9b155c27876eb17812cb63a8ef361b5a</data>
+      <data key="d12">unknown_source</data>
+      <data key="d13">1772606950</data>
+      <data key="d14" />
+      <data key="d15">2023-01-01T00:00:00Z</data>
+    </edge>
+    <edge source="星海科技" target="1990">
+      <data key="d8">1.0</data>
+      <data key="d9">StarOcean Tech was founded in 1990.</data>
+      <data key="d10">founding year,time</data>
+      <data key="d11">chunk-9b155c27876eb17812cb63a8ef361b5a</data>
+      <data key="d12">unknown_source</data>
+      <data key="d13">1772606950</data>
+      <data key="d14" />
+      <data key="d15">2023-01-01T00:00:00Z</data>
+    </edge>
+  </graph>
+</graphml>

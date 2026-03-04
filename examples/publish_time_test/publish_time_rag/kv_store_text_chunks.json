@@ -1,0 +1,32 @@
+{
+  "chunk-9b155c27876eb17812cb63a8ef361b5a": {
+    "tokens": 40,
+    "content": "星海科技（StarOcean Tech）是一家中国科技公司，成立于1990年，总部位于北京。该公司主要产品为办公软件，创始人李建国。",
+    "chunk_order_index": 0,
+    "full_doc_id": "doc-9b155c27876eb17812cb63a8ef361b5a",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:dd1bd13f422783203e08dcdd7ed7e85b",
+      "default:extract:e9ed1625e0ff226bba6ee408c2cf626e"
+    ],
+    "publish_time": "2023-01-01T00:00:00Z",
+    "create_time": 1772606777,
+    "update_time": 1772606947,
+    "_id": "chunk-9b155c27876eb17812cb63a8ef361b5a"
+  },
+  "chunk-633c54bd78902f36f87a705e0c1e6f4e": {
+    "tokens": 41,
+    "content": "星海科技（StarOcean Tech）是一家中国科技公司，成立于2005年，总部位于上海。该公司主要产品为云计算服务，创始人李建国。",
+    "chunk_order_index": 0,
+    "full_doc_id": "doc-633c54bd78902f36f87a705e0c1e6f4e",
+    "file_path": "unknown_source",
+    "llm_cache_list": [
+      "default:extract:d251c7b263954e9e8044171529ed7318",
+      "default:extract:6449a5a479fef2dcd79fc2097e58bb0b"
+    ],
+    "publish_time": "2024-06-01T00:00:00Z",
+    "create_time": 1772606777,
+    "update_time": 1772607007,
+    "_id": "chunk-633c54bd78902f36f87a705e0c1e6f4e"
+  }
+}

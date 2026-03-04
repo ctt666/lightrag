@@ -728,6 +728,8 @@ class DocProcessingStatus:
     """ISO format timestamp when document was created"""
     updated_at: str
     """ISO format timestamp when document was last updated"""
+    publish_time: str | None = None
+    """Optional publish time of the document (ISO8601 string)"""
     track_id: str | None = None
     """Tracking ID for monitoring progress"""
     chunks_count: int | None = None
